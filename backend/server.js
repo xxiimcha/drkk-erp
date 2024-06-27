@@ -24,6 +24,10 @@ const messagesRouter = require('./routes/messages');
 const resourceAllocationsRouter = require('./routes/resourceAllocations');
 const discussionsRouter = require('./routes/discussions');
 
+const designTemplatesRouter = require('./routes/designTemplates');
+const customAssetsRouter = require('./routes/customAssets');
+const designVersionsRouter = require('./routes/designVersions');
+
 app.use('/users', usersRouter);
 app.use('/service-requests', serviceRequestsRouter);
 app.use('/slas', slasRouter);
@@ -31,6 +35,10 @@ app.use('/messages', messagesRouter);
 app.use('/serviceRequests', serviceRequestsRouter);
 app.use('/resource-allocations', resourceAllocationsRouter);
 app.use('/discussions', discussionsRouter);
+
+app.use('/design-templates', designTemplatesRouter);
+app.use('/custom-assets', customAssetsRouter);
+app.use('/design-versions', designVersionsRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

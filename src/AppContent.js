@@ -19,10 +19,13 @@ import CustomerFeedbackPage from './pages/admin/crm/CustomerFeedbackPage';
 import TaskManagementPage from './pages/admin/projectManagement/TaskManagementPage';
 import ResourceAllocationPage from './pages/admin/projectManagement/ResourceAllocationPage';
 import DiscussionBoardPage from './pages/admin/projectManagement/DiscussionBoardPage';
+import DesignTemplatesPage from './pages/admin/3dLayout/DesignTemplatesPage';
+import CustomAssetsPage from './pages/admin/3dLayout/CustomAssetsPage';
+import DesignVersionControlPage from './pages/admin/3dLayout/DesignVersionControlPage';
 
 const AppContent = ({ openModal }) => {
   const location = useLocation();
-  const isAdminPage = location.pathname.startsWith('/admin');
+  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname.startsWith('/crm') || location.pathname.startsWith('/projectManagement') || location.pathname.startsWith('/3dLayout');
 
   return (
     <>
@@ -44,6 +47,9 @@ const AppContent = ({ openModal }) => {
         <Route path="/projectManagement/tasks" element={<TaskManagementPage />} />
         <Route path="/projectManagement/resource-allocation" element={<ResourceAllocationPage />} />
         <Route path="/projectManagement/discussion" element={<DiscussionBoardPage />} />
+        <Route path="/3dLayout/templates" element={<DesignTemplatesPage />} />
+        <Route path="/3dLayout/assets" element={<CustomAssetsPage />} />
+        <Route path="/3dLayout/version-control" element={<DesignVersionControlPage />} />
         {/* Add more routes as needed */}
       </Routes>
     </>
