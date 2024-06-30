@@ -24,12 +24,7 @@ const messagesRouter = require('./routes/messages');
 const resourceAllocationsRouter = require('./routes/resourceAllocations');
 const discussionsRouter = require('./routes/discussions');
 
-const designTemplatesRouter = require('./routes/designTemplates');
-const customAssetsRouter = require('./routes/customAssets');
-const designVersionsRouter = require('./routes/designVersions');
-const materialRequestsRouter = require('./routes/materialRequests'); 
 
-const suppliersRouter = require('./routes/suppliers');
 app.use('/users', usersRouter);
 app.use('/service-requests', serviceRequestsRouter);
 app.use('/slas', slasRouter);
@@ -38,13 +33,26 @@ app.use('/serviceRequests', serviceRequestsRouter);
 app.use('/resource-allocations', resourceAllocationsRouter);
 app.use('/discussions', discussionsRouter);
 
+const designTemplatesRouter = require('./routes/designTemplates');
+const customAssetsRouter = require('./routes/customAssets');
+const designVersionsRouter = require('./routes/designVersions');
 app.use('/design-templates', designTemplatesRouter);
 app.use('/custom-assets', customAssetsRouter);
 app.use('/design-versions', designVersionsRouter);
 
+const materialRequestsRouter = require('./routes/materialRequests'); 
 app.use('/material-requests', materialRequestsRouter); 
 
+const suppliersRouter = require('./routes/suppliers');
 app.use('/suppliers', suppliersRouter);
+
+const quotationsRouter = require('./routes/quotations');
+const ordersRouter = require('./routes/orders');
+const paymentsRouter = require('./routes/payments');
+
+app.use('/quotations', quotationsRouter);
+app.use('/orders', ordersRouter);
+app.use('/payments', paymentsRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

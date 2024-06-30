@@ -25,10 +25,19 @@ import DesignVersionControlPage from './pages/admin/3dLayout/DesignVersionContro
 import StockManagementPage from './pages/admin/inventory/StockManagementPage';
 import SupplierManagementPage from './pages/admin/inventory/SupplierManagementPage';
 import MaterialRequestsPage from './pages/admin/inventory/MaterialRequestsPage';
+import QuotationManagementPage from './pages/admin/sales/QuotationManagementPage';
+import OrderManagementPage from './pages/admin/sales/OrderManagementPage';
+import PaymentProcessingPage from './pages/admin/sales/PaymentProcessingPage';
 
 const AppContent = ({ openModal }) => {
   const location = useLocation();
-  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname.startsWith('/inventory') || location.pathname.startsWith('/3dLayout') || location.pathname.startsWith('/projectManagement') || location.pathname.startsWith('/crm');
+  const isAdminPage = 
+    location.pathname.startsWith('/admin') || 
+    location.pathname.startsWith('/inventory') || 
+    location.pathname.startsWith('/3dLayout') || 
+    location.pathname.startsWith('/projectManagement') || 
+    location.pathname.startsWith('/crm') || 
+    location.pathname.startsWith('/sales');
 
   return (
     <>
@@ -56,7 +65,9 @@ const AppContent = ({ openModal }) => {
         <Route path="/inventory/stock" element={<StockManagementPage />} />
         <Route path="/inventory/supplier" element={<SupplierManagementPage />} />
         <Route path="/inventory/material-requests" element={<MaterialRequestsPage />} />
-        {/* Add more routes as needed */}
+        <Route path="/sales/quotations" element={<QuotationManagementPage />} />
+        <Route path="/sales/orders" element={<OrderManagementPage />} />
+        <Route path="/sales/payments" element={<PaymentProcessingPage />} />
       </Routes>
     </>
   );

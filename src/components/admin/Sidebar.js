@@ -288,22 +288,22 @@ const Sidebar = () => {
           </>
         )}
         <SidebarItem
-          onClick={() => toggleDropdown('salesAndBilling')}
-          active={location.pathname.startsWith('/salesAndBilling')}
+          onClick={() => toggleDropdown('sales')}
+          active={location.pathname.startsWith('/sales')}
         >
           <IconContainer>
             <AiOutlineLineChart />
           </IconContainer>
           Sales and Billing
           <IconContainer style={{ marginLeft: 'auto' }}>
-            {dropdownOpen['salesAndBilling'] ? <FaChevronDown /> : <FaChevronRight />}
+            {dropdownOpen['sales'] ? <FaChevronDown /> : <FaChevronRight />}
           </IconContainer>
         </SidebarItem>
-        {dropdownOpen['salesAndBilling'] && (
+        {dropdownOpen['sales'] && (
           <>
             <DropdownItem
-              onClick={() => navigate('/salesAndBilling/quotation')}
-              active={location.pathname === '/salesAndBilling/quotation'}
+              onClick={() => navigate('/sales/quotations')}
+              active={location.pathname === '/sales/quotations'}
             >
               <IconContainer>
                 <AiOutlineFile />
@@ -311,8 +311,8 @@ const Sidebar = () => {
               Quotation Management
             </DropdownItem>
             <DropdownItem
-              onClick={() => navigate('/salesAndBilling/order')}
-              active={location.pathname === '/salesAndBilling/order'}
+              onClick={() => navigate('/sales/orders')}
+              active={location.pathname === '/sales/orders'}
             >
               <IconContainer>
                 <AiOutlineFile />
@@ -320,8 +320,8 @@ const Sidebar = () => {
               Order Management
             </DropdownItem>
             <DropdownItem
-              onClick={() => navigate('/salesAndBilling/payment')}
-              active={location.pathname === '/salesAndBilling/payment'}
+              onClick={() => navigate('/sales/payments')}
+              active={location.pathname === '/sales/payments'}
             >
               <IconContainer>
                 <AiOutlineFile />
@@ -329,8 +329,8 @@ const Sidebar = () => {
               Payment Processing
             </DropdownItem>
             <DropdownItem
-              onClick={() => navigate('/salesAndBilling/report')}
-              active={location.pathname === '/salesAndBilling/report'}
+              onClick={() => navigate('/sales/reports')}
+              active={location.pathname === '/sales/reports'}
             >
               <IconContainer>
                 <AiOutlineFile />
