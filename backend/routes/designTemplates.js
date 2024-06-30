@@ -1,26 +1,47 @@
 // backend/routes/designTemplates.js
-const router = require('express').Router();
-let DesignTemplate = require('../models/designTemplate.model');
+const express = require('express');
+const router = express.Router();
+const multer = require('multer');
+const DesignTemplate = require('../models/designTemplate.model');
 
-router.route('/').get((req, res) => {
-  DesignTemplate.find()
-    .then(templates => res.json(templates))
-    .catch(err => res.status(400).json('Error: ' + err));
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
 });
 
-router.route('/:id').get((req, res) => {
-  DesignTemplate.findById(req.params.id)
-    .then(template => res.json(template))
-    .catch(err => res.status(400).json('Error: ' + err));
+const upload = multer({ storage: storage });
+
+// Get all design templates
+router.get('/', async (req, res) => {
+  try {
+    const templates = await DesignTemplate.find();
+    res.json(templates);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-router.route('/add').post((req, res) => {
+// Create a new design template
+router.post('/', upload.single('file'), async (req, res) => {
   const { name, description, customizationOptions } = req.body;
-  const newDesignTemplate = new DesignTemplate({ name, description, customizationOptions });
+  const file = req.file ? req.file.path : '';
+  const template = new DesignTemplate({
+    name,
+    description,
+    customizationOptions: JSON.parse(customizationOptions),
+    file
+  });
 
-  newDesignTemplate.save()
-    .then(() => res.json('Design Template added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  try {
+    const newTemplate = await template.save();
+    res.status(201).json(newTemplate);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 module.exports = router;

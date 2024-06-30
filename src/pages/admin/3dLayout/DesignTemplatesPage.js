@@ -65,6 +65,12 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
+const FileInput = styled.input`
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
 const Button = styled.button`
   padding: 0.75rem;
   background-color: #007bff;
@@ -78,6 +84,7 @@ const Button = styled.button`
 const DesignTemplatesPage = () => {
   const [templates, setTemplates] = useState([]);
   const [newTemplate, setNewTemplate] = useState({ name: '', description: '', customizationOptions: [] });
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -93,12 +100,25 @@ const DesignTemplatesPage = () => {
     setNewTemplate({ ...newTemplate, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createDesignTemplate(newTemplate);
+    const formData = new FormData();
+    formData.append('name', newTemplate.name);
+    formData.append('description', newTemplate.description);
+    formData.append('customizationOptions', JSON.stringify(newTemplate.customizationOptions));
+    if (file) {
+      formData.append('file', file);
+    }
+
+    await createDesignTemplate(formData);
     const response = await getAllDesignTemplates();
     setTemplates(response.data);
     setNewTemplate({ name: '', description: '', customizationOptions: [] });
+    setFile(null);
   };
 
   return (
@@ -129,6 +149,13 @@ const DesignTemplatesPage = () => {
               value={newTemplate.description}
               onChange={handleChange}
               placeholder="Template Description"
+              required
+            />
+            <FileInput
+              type="file"
+              name="file"
+              onChange={handleFileChange}
+              accept=".dwg"
               required
             />
             <Button type="submit">Create Template</Button>
