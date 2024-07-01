@@ -28,16 +28,15 @@ import MaterialRequestsPage from './pages/admin/inventory/MaterialRequestsPage';
 import QuotationManagementPage from './pages/admin/sales/QuotationManagementPage';
 import OrderManagementPage from './pages/admin/sales/OrderManagementPage';
 import PaymentProcessingPage from './pages/admin/sales/PaymentProcessingPage';
+import EmployeeDatabasePage from './pages/admin/hrm/EmployeeDatabasePage';
+import AttendancePage from './pages/admin/hrm/AttendancePage';
+import PayrollPage from './pages/admin/hrm/PayrollPage';
+import LeaveManagementPage from './pages/admin/hrm/LeaveManagementPage';
+import AddEmployeePage from './pages/admin/hrm/AddEmployeePage';
 
 const AppContent = ({ openModal }) => {
   const location = useLocation();
-  const isAdminPage = 
-    location.pathname.startsWith('/admin') || 
-    location.pathname.startsWith('/inventory') || 
-    location.pathname.startsWith('/3dLayout') || 
-    location.pathname.startsWith('/projectManagement') || 
-    location.pathname.startsWith('/crm') || 
-    location.pathname.startsWith('/sales');
+  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname.startsWith('/inventory') || location.pathname.startsWith('/3dLayout') || location.pathname.startsWith('/projectManagement') || location.pathname.startsWith('/crm') || location.pathname.startsWith('/hrm') || location.pathname.startsWith('/sales');
 
   return (
     <>
@@ -68,6 +67,11 @@ const AppContent = ({ openModal }) => {
         <Route path="/sales/quotations" element={<QuotationManagementPage />} />
         <Route path="/sales/orders" element={<OrderManagementPage />} />
         <Route path="/sales/payments" element={<PaymentProcessingPage />} />
+        <Route path="/hrm/employees" element={<EmployeeDatabasePage />} />
+        <Route path="/hrm/attendance" element={<AttendancePage />} />
+        <Route path="/hrm/payroll" element={<PayrollPage />} />
+        <Route path="/hrm/leave" element={<LeaveManagementPage />} />
+        <Route path="/hrm/add-employee" element={<AddEmployeePage />} />
       </Routes>
     </>
   );

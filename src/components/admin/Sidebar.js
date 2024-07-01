@@ -354,8 +354,8 @@ const Sidebar = () => {
         {dropdownOpen['hrm'] && (
           <>
             <DropdownItem
-              onClick={() => navigate('/hrm/employee')}
-              active={location.pathname === '/hrm/employee'}
+              onClick={() => navigate('/hrm/employees')}
+              active={location.pathname === '/hrm/employees'}
             >
               <IconContainer>
                 <AiOutlineFileSearch />
