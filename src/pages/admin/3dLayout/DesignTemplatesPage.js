@@ -1,8 +1,10 @@
-// frontend/src/pages/admin/3dLayout/DesignTemplatesPage.js
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getAllDesignTemplates, createDesignTemplate } from '../../../services/designTemplateService';
 import Sidebar from '../../../components/admin/Sidebar';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 
 const Container = styled.div`
   display: flex;
@@ -81,10 +83,28 @@ const Button = styled.button`
   font-size: 1rem;
 `;
 
+const PreviewWrapper = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const STLModel = ({ url }) => {
+  const geometry = useLoader(STLLoader, url);
+
+  return (
+    <mesh geometry={geometry}>
+      <meshStandardMaterial color="orange" />
+    </mesh>
+  );
+};
+
 const DesignTemplatesPage = () => {
   const [templates, setTemplates] = useState([]);
-  const [newTemplate, setNewTemplate] = useState({ name: '', description: '', customizationOptions: [] });
-  const [file, setFile] = useState(null);
+  const [newTemplate, setNewTemplate] = useState({ name: '', description: '' });
+  const [fileURLs, setFileURLs] = useState([]);
+  const [selectedType, setSelectedType] = useState(''); // 'folder' or 'file'
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -101,7 +121,9 @@ const DesignTemplatesPage = () => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFiles = Array.from(e.target.files);
+    const urls = selectedFiles.map(file => URL.createObjectURL(file));
+    setFileURLs(urls);
   };
 
   const handleSubmit = async (e) => {
@@ -109,16 +131,20 @@ const DesignTemplatesPage = () => {
     const formData = new FormData();
     formData.append('name', newTemplate.name);
     formData.append('description', newTemplate.description);
-    formData.append('customizationOptions', JSON.stringify(newTemplate.customizationOptions));
-    if (file) {
-      formData.append('file', file);
-    }
+    fileURLs.forEach((url, index) => {
+      formData.append(`file_${index}`, url);
+    });
 
     await createDesignTemplate(formData);
     const response = await getAllDesignTemplates();
     setTemplates(response.data);
-    setNewTemplate({ name: '', description: '', customizationOptions: [] });
-    setFile(null);
+    setNewTemplate({ name: '', description: '' });
+    setFileURLs([]);
+  };
+
+  const handleTypeChange = (e) => {
+    setSelectedType(e.target.value);
+    setFileURLs([]);
   };
 
   return (
@@ -151,15 +177,46 @@ const DesignTemplatesPage = () => {
               placeholder="Template Description"
               required
             />
-            <FileInput
-              type="file"
-              name="file"
-              onChange={handleFileChange}
-              accept=".dwg"
-              required
-            />
+            <select value={selectedType} onChange={handleTypeChange} required>
+              <option value="">Select Type</option>
+              <option value="folder">Folder</option>
+              <option value="file">File</option>
+            </select>
+            {selectedType === 'folder' && (
+              <FileInput
+                type="file"
+                name="folder"
+                onChange={handleFileChange}
+                webkitdirectory="true"
+                directory="true"
+                multiple
+                required
+              />
+            )}
+            {selectedType === 'file' && (
+              <FileInput
+                type="file"
+                name="file"
+                onChange={handleFileChange}
+                accept=".stl,.gltf,.glb"
+                required
+              />
+            )}
             <Button type="submit">Create Template</Button>
           </Form>
+          {fileURLs.length > 0 && (
+            <PreviewWrapper>
+              <Title>3D Model Preview</Title>
+              <Canvas style={{ width: '100%', height: '400px' }}>
+                <ambientLight />
+                <pointLight position={[10, 10, 10]} />
+                <OrbitControls />
+                {fileURLs.map((url, index) => (
+                  <STLModel key={index} url={url} />
+                ))}
+              </Canvas>
+            </PreviewWrapper>
+          )}
         </ContentWrapper>
       </MainContent>
     </Container>

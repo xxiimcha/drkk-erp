@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -59,6 +57,18 @@ app.use('/payments', paymentsRouter);
 
 const hrmRouter = require('./routes/hrm');
 app.use('/hrm', hrmRouter);
+
+const homeSettingsRouter = require('./routes/homeSettings');
+const servicesRouter = require('./routes/service');
+const worksRouter = require('./routes/work');
+const aboutRouter = require('./routes/about');
+const contactRouter = require('./routes/contact');
+
+app.use('/api/home-settings', homeSettingsRouter);
+app.use('/api/services', servicesRouter);
+app.use('/api/works', worksRouter);
+app.use('/api/about', aboutRouter);
+app.use('/api/contact', contactRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
