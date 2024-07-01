@@ -96,7 +96,6 @@ const Sidebar = () => {
         <FaBars size={24} />
       </HamburgerMenu>
       <SidebarContainer isOpen={sidebarOpen}>
-        <SidebarTitle>DRKK Admin</SidebarTitle>
         <SidebarItem
           onClick={() => toggleDropdown('crm')}
           active={location.pathname.startsWith('/admin')}

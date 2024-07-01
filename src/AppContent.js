@@ -3,6 +3,7 @@
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header';
+import AdminHeader from './components/admin/AdminHeader';
 import LandingPage from './pages/LandingPage';
 import ServicesPage from './pages/ServicesPage';
 import WorksPage from './pages/WorksPage';
@@ -36,6 +37,7 @@ import AddEmployeePage from './pages/admin/hrm/AddEmployeePage';
 import SalesReportPage from './pages/admin/reports/SalesReportPage';
 import EmployeeReportPage from './pages/admin/reports/EmployeeReportPage';
 import DataVisualizationPage from './pages/admin/reports/DataVisualizationPage';
+import SystemSettingsPage from './pages/admin/SystemSettingsPage';
 
 const AppContent = ({ openModal }) => {
   const location = useLocation();
@@ -44,6 +46,7 @@ const AppContent = ({ openModal }) => {
   return (
     <>
       {!isAdminPage && <Header />}
+      {isAdminPage && <AdminHeader />}
       <Routes>
         <Route path="/" element={<LandingPage openModal={openModal} />} />
         <Route path="/services" element={<ServicesPage />} />
@@ -78,6 +81,7 @@ const AppContent = ({ openModal }) => {
         <Route path="/reporting/sales-report" element={<SalesReportPage />} />
         <Route path="/reporting/employee-report" element={<EmployeeReportPage />} />
         <Route path="/reporting/data-visualization" element={<DataVisualizationPage />} />
+        <Route path="/admin/settings" element={<SystemSettingsPage />} />
       </Routes>
     </>
   );
