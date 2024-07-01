@@ -33,10 +33,13 @@ import AttendancePage from './pages/admin/hrm/AttendancePage';
 import PayrollPage from './pages/admin/hrm/PayrollPage';
 import LeaveManagementPage from './pages/admin/hrm/LeaveManagementPage';
 import AddEmployeePage from './pages/admin/hrm/AddEmployeePage';
+import SalesReportPage from './pages/admin/reports/SalesReportPage';
+import EmployeeReportPage from './pages/admin/reports/EmployeeReportPage';
+import DataVisualizationPage from './pages/admin/reports/DataVisualizationPage';
 
 const AppContent = ({ openModal }) => {
   const location = useLocation();
-  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname.startsWith('/inventory') || location.pathname.startsWith('/3dLayout') || location.pathname.startsWith('/projectManagement') || location.pathname.startsWith('/crm') || location.pathname.startsWith('/hrm') || location.pathname.startsWith('/sales');
+  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname.startsWith('/inventory') || location.pathname.startsWith('/3dLayout') || location.pathname.startsWith('/projectManagement') || location.pathname.startsWith('/crm') || location.pathname.startsWith('/hrm') || location.pathname.startsWith('/reporting');
 
   return (
     <>
@@ -72,6 +75,9 @@ const AppContent = ({ openModal }) => {
         <Route path="/hrm/payroll" element={<PayrollPage />} />
         <Route path="/hrm/leave" element={<LeaveManagementPage />} />
         <Route path="/hrm/add-employee" element={<AddEmployeePage />} />
+        <Route path="/reporting/sales-report" element={<SalesReportPage />} />
+        <Route path="/reporting/employee-report" element={<EmployeeReportPage />} />
+        <Route path="/reporting/data-visualization" element={<DataVisualizationPage />} />
       </Routes>
     </>
   );

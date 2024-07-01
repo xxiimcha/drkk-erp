@@ -392,22 +392,22 @@ const Sidebar = () => {
           </>
         )}
         <SidebarItem
-          onClick={() => toggleDropdown('reportingAndAnalytics')}
-          active={location.pathname.startsWith('/reportingAndAnalytics')}
+          onClick={() => toggleDropdown('reporting')}
+          active={location.pathname.startsWith('/reporting')}
         >
           <IconContainer>
             <AiOutlineLineChart />
           </IconContainer>
           Reporting and Analytics
           <IconContainer style={{ marginLeft: 'auto' }}>
-            {dropdownOpen['reportingAndAnalytics'] ? <FaChevronDown /> : <FaChevronRight />}
+            {dropdownOpen['reporting'] ? <FaChevronDown /> : <FaChevronRight />}
           </IconContainer>
         </SidebarItem>
-        {dropdownOpen['reportingAndAnalytics'] && (
+        {dropdownOpen['reporting'] && (
           <>
             <DropdownItem
-              onClick={() => navigate('/reportingAndAnalytics/sales')}
-              active={location.pathname === '/reportingAndAnalytics/sales'}
+              onClick={() => navigate('/reporting/sales-report')}
+              active={location.pathname === '/reporting/sales-report'}
             >
               <IconContainer>
                 <AiOutlineFile />
@@ -415,8 +415,8 @@ const Sidebar = () => {
               Sales Report
             </DropdownItem>
             <DropdownItem
-              onClick={() => navigate('/reportingAndAnalytics/employee')}
-              active={location.pathname === '/reportingAndAnalytics/employee'}
+              onClick={() => navigate('/reporting/employee-report')}
+              active={location.pathname === '/reporting/employee-report'}
             >
               <IconContainer>
                 <AiOutlineFile />
@@ -424,8 +424,8 @@ const Sidebar = () => {
               Employee Report
             </DropdownItem>
             <DropdownItem
-              onClick={() => navigate('/reportingAndAnalytics/data')}
-              active={location.pathname === '/reportingAndAnalytics/data'}
+              onClick={() => navigate('/reporting/data-visualization')}
+              active={location.pathname === '/reporting/data-visualization'}
             >
               <IconContainer>
                 <AiOutlineFile />
